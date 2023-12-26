@@ -1,0 +1,148 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+
+			"style": {
+				"navigationBarTitleText": "今日订单",
+				"navigationBarTextStyle": "#fa2c19",
+				"enablePullDownRefresh": true,
+				"app-plus": {
+					"animationType": "fade-in",
+					"animationDuration": 300
+				}
+
+			}
+		},
+		{
+			"path": "pages/order/order",
+			
+			"style": {
+				"navigationBarTextStyle": "#fa2c19",
+				"navigationBarTitleText": "订单记录",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/manage/manage",
+			
+			"style": {
+				"navigationBarTextStyle": "#fa2c19",
+				"navigationBarTitleText": "菜单管理",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/statistic/statistic",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "统计"
+			}
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/manage/addMenu",
+			"style": {
+				"navigationBarTitleText": "添加菜单"
+			}
+		},
+		
+		{
+			"path": "pages/login/login",
+
+			"style": {
+				"navigationBarTitleText": "欢迎登录",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+
+			}
+		},
+		{
+			"path": "pages/orderDetail/index",
+
+			"style": {
+				"navigationBarTitleText": "订单操作",
+				"enablePullDownRefresh": true
+
+			}
+		},
+		{
+			"path": "pages/orderDetail/orderInfo",
+
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": true
+			}
+		}
+		
+		
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"backgroundColor": "#F8F8F8"
+	},
+	// "uniIdRouter": {},
+	"tabBar": {
+		"color": "#000000",
+		"selectedColor": "#fa2c19",
+		"backgroundColor": "#ffffff",
+		"borderStyle": "#ccc",
+		"fontSize": "12px",
+		"list": [
+		  {
+			"pagePath": "pages/index/index",
+			"text": "首页",
+			"meta": {
+			},
+			"iconPath": "static/home-alt.png",
+			"selectedIconPath": "static/home-alt-a.png"
+		  },
+		  {
+			"pagePath": "pages/order/order",
+			"text": "订单",
+			"iconPath": "static/order-approve-outline.png",
+			"selectedIconPath": "static/order-approve-outline-a.png",
+			"meta": {
+			}
+			
+		  },
+		  {
+			"pagePath": "pages/manage/manage",
+			"text": "管理",
+			"iconPath": "static/bookmark-manager-outline.png",
+			"selectedIconPath": "static/bookmark-manager-outline-a.png",
+			"meta": {
+			}
+			
+		  },
+		  {
+			"pagePath": "pages/statistic/statistic",
+			"text": "统计",
+			"iconPath": "static/statistic-up.png",
+			"selectedIconPath": "static/statistic-up-a.png",
+			"meta": {
+			}
+			
+		  },
+		  {
+			"pagePath": "pages/mine/mine",
+			"text": "我的",
+			"iconPath": "static/user-2-line.png",
+			"selectedIconPath": "static/user-2-line-a.png",
+			"meta": {
+			}
+			
+		  }
+		  
+		  
+		  
+		]
+	  }
+}

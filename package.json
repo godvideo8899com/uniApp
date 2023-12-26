@@ -1,0 +1,34 @@
+{
+  "name": "uni-app-vue3-tailwind-hbuilder-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "weapp-tw patch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sonofmagic/uni-app-vue3-tailwind-hbuilder-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sonofmagic/uni-app-vue3-tailwind-hbuilder-template/issues"
+  },
+  "homepage": "https://github.com/sonofmagic/uni-app-vue3-tailwind-hbuilder-template#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "postcss-rem-to-responsive-pixel": "^6.0.1",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.3.3",
+    "weapp-tailwindcss": "^3.0.0"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "2.0.2-3090820231124001",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "dayjs": "^1.11.10",
+    "socket.io-client": "^4.7.2"
+  }
+}
