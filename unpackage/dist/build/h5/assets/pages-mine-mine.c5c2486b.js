@@ -1,1 +1,0 @@
-import{o as e,b as r,q as n}from"./index-42efb9d3.js";import{_ as o}from"./_plugin-vue_export-helper.1b428a4d.js";const s=o({},[["render",function(o,s){return e(),r("div",null,[n("h2",null,"我的")])}]]);export{s as default};
