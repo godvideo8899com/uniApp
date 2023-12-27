@@ -34,10 +34,10 @@ export default defineConfig({
       plugins: postcssPlugins,
     },
   },
-  define: { 
-    global: UNI_PLATFORM[process.env.UNI_PLATFORM],
-    wx: UNI_PLATFORM[process.env.UNI_PLATFORM]
-},
+//   define: { 
+//     global: UNI_PLATFORM[process.env.UNI_PLATFORM],
+//     wx: UNI_PLATFORM[process.env.UNI_PLATFORM]
+// },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './'),
