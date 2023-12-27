@@ -6,12 +6,11 @@ import socket from "@/utils/socket";
 import tipMusic from "./static/tip.mp3";
 console.log(tipMusic);
 provide("socket", socket);
-socket.on("message", (data) => {
+socket.on("message", async (data) => {
   if (getToken()) {
     const innerAudioContext = uni.createInnerAudioContext();
     innerAudioContext.src = tipMusic;
     innerAudioContext.play();
-    innerAudioContext.destroy();
     if (data.type == "addFoods") {
       uni.showModal({
         title: data.desk + "号桌-顾客加菜",
