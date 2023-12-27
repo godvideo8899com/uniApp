@@ -3,6 +3,7 @@ import { reactive, ref } from "vue";
 import AbButton from "../components/abButton.vue";
 import { loginApi } from "@/utils/api";
 import { setToken } from "@/utils/auth";
+import loginImg from "@/static/logo.png";
 const formData = reactive({
   userName: "",
   password: "",
@@ -61,7 +62,7 @@ const rules = {
 
 <template>
   <div>
-    <img src="@/static/logo.png" alt="" class="w-full" srcset="" />
+    <image :src="loginImg" class="w-full" srcset="" />
     <p class="text-center text-text3">请登录</p>
   </div>
   <div class="p-[12px]">

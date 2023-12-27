@@ -33,7 +33,7 @@ const showImg = (url) => {
       style="border-bottom: 1px solid var(--border_c)"
     >
       <image
-        :src="item.picImg"
+        :src="item.picImg || imgErr"
         @error="error(item)"
         @click="showImg(item.picImg)"
         class="w-[60px] h-[60px]"

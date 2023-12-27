@@ -35,15 +35,16 @@
 		{
 			"path": "pages/statistic/statistic",
 			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTitleText": "统计"
+				"navigationBarTextStyle": "#fa2c19",
+				"navigationBarTitleText": "销售统计"
 			}
 		},
 		{
 			"path": "pages/mine/mine",
 			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTitleText": "我的"
+				"navigationBarTextStyle": "#fa2c19",
+				"navigationBarTitleText": "个人中心",
+				"enablePullDownRefresh": true
 			}
 		},
 		{

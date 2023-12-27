@@ -102,6 +102,9 @@ const submitOne = async () => {
       true
     );
     console.log(res2);
+    if (!getToken()) {
+      btnStutas.value = true;
+    }
     props.queryData.id = res2.data;
     socket.emit("message", {
       desk: props.queryData.desk,

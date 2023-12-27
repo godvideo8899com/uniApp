@@ -150,12 +150,35 @@ const toEdit = (item) => {
         </uni-easyinput>
       </view>
     </div>
-    <view class="text-center">
+    <view class="grid grid-cols-3 text-14 text-center">
       <span
-        >总单数：<span class="text-text3">{{ orderList.length }}</span></span
+        >总单数:<span class="text-text3">{{ orderList.length }}</span></span
       >
-      <span class="ml-[10px]"
-        >总金额：<span class="text-text3">{{ totalMoney }}</span></span
+      <span class=""
+        >总金额:<span class="text-text3">{{ totalMoney }}</span></span
+      >
+      <span class=""
+        >未完成订单:<span class="text-text3">{{
+          orderList.filter((i) => !i.isFinish).length
+        }}</span></span
+      >
+    </view>
+    <view class="grid grid-cols-2 text-14 text-center">
+      <span class=""
+        >已结算金额:<span class="text-text3">{{
+          orderList
+            .filter((i) => i.isFinish)
+            .reduce((a, b) => a + Number(b.totalMoney), 0)
+            .toFixed(2)
+        }}</span></span
+      >
+      <span class=""
+        >未结算金额:<span class="text-text3">{{
+          orderList
+            .filter((i) => !i.isFinish)
+            .reduce((a, b) => a + Number(b.totalMoney), 0)
+            .toFixed(2)
+        }}</span></span
       >
     </view>
     <view>

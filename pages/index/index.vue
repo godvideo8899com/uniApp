@@ -2,7 +2,12 @@
 import dayjs from "dayjs";
 import { ref, reactive } from "vue";
 import { onPullDownRefresh, onShow, onLoad } from "@dcloudio/uni-app";
-import { orderApi, orderUpdateApi, orderAddApi } from "@/utils/api";
+import {
+  orderApi,
+  orderUpdateApi,
+  orderAddApi,
+  setFinishApi,
+} from "@/utils/api";
 import AbEmpty from "../components/abEmpty.vue";
 import AbButton from "../components/abButton.vue";
 import AbRadio from "../components/abRadio.vue";
@@ -154,6 +159,21 @@ const search = async () => {
   let res = await orderApi({ id: searchValue.value });
   todayOrder.value = res;
 };
+const setAllFinish = async () => {
+  uni.showModal({
+    title: "提示",
+    content: "确定要设置所有订单已完成吗？",
+    success: async ({ confirm, cancel }) => {
+      if (confirm) {
+        await setFinishApi();
+        uni.showToast({
+          title: "设置成功",
+          icon: "success",
+        });
+      }
+    },
+  });
+};
 </script>
 
 <template>
@@ -184,7 +204,7 @@ const search = async () => {
           style="border: 2rpx solid #f5f5f5"
         >
           <div class="text-text2 text-14">
-            <p>{{ oName(item) }}</p>
+            <p>{{ item.orderName }}</p>
             <p class="text-12">创建时间：{{ item.showTime }}</p>
           </div>
           <div class="ml-auto">
@@ -216,7 +236,7 @@ const search = async () => {
             />
           </div>
           <span
-            class="absolute top-0 rotate-45 text-12 text-text3 left-1/2"
+            class="absolute top-0 rotate-45 text-12 text-text3 left-1/2 scale-75"
             style="border: 1px solid red"
             v-if="item.undoneRecord"
             >有加菜</span
@@ -225,8 +245,15 @@ const search = async () => {
       </uni-swipe-action-item>
     </uni-swipe-action>
     <AbEmpty v-if="todayOrder.length === 0" />
-    <div class="px-[20rpx] mt-[20rpx]">
+    <div class="px-[20rpx] mt-[20rpx] pb-[20px]">
       <AbButton icon="plusempty" @click="addDialog">新增订单</AbButton>
+      <AbButton
+        icon="gear"
+        class="mt-[12px]"
+        type="primary"
+        @click="setAllFinish"
+        >一键设置订单完成</AbButton
+      >
     </div>
     <uni-popup ref="popup1" type="dialog">
       <uni-popup-dialog

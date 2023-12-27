@@ -105,3 +105,27 @@ export function updateRecordsApi(data) {
         data
     })
 }
+//统计数据
+export function chartBarApi(data) {
+    return request({
+        url: '/chartBar',
+        method: 'POST',
+        data
+    })
+}
+//设置订单一键完成
+export function setFinishApi(data) {
+    return request({
+        url: '/oneKeyFinish',
+        method: 'POST',
+        data
+    })
+}
+//获取用户信息
+export function userInfoApi(data) {
+    return request({
+        url: '/userinfo',
+        method: 'POST',
+        data
+    })
+}
