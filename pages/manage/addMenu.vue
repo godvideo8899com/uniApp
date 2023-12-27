@@ -55,11 +55,18 @@ const menuForm = ref(null);
 const submit = async () => {
   await menuForm.value.validate();
   fileValue.value.tempFilePaths.length && (await upload());
+  console.log(formData.value.picImg);
+  let reqImg = "";
+  if (formData.value.picImg) {
+    reqImg = formData.value.picImg.includes("http")
+      ? ""
+      : formData.value.picImg;
+  }
   let reqData = {
     ...formData.value,
     type: Number(formData.value.type),
     price: Number(formData.value.price),
-    picImg: formData.value.picImg.includes("http") ? "" : formData.value.picImg,
+    picImg: reqImg,
   };
   if (formData.value.id) {
     await updateMenuApi(reqData);

@@ -72,7 +72,9 @@ const submitOne = async () => {
       if (element.count != item.count) {
         let changeItem = JSON.parse(JSON.stringify(element));
         changeItem.count = element.count - item.count;
-        changeArr.push(changeItem);
+        if (changeItem.count > 0) {
+          changeArr.push(changeItem);
+        }
       }
     });
     await orderUpdateApi({
