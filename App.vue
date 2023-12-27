@@ -3,13 +3,16 @@
 import { provide } from "vue";
 import { getToken } from "@/utils/auth";
 import socket from "@/utils/socket";
+import tipMusic from "./static/tip.mp3";
+console.log(tipMusic);
 provide("socket", socket);
-const innerAudioContext = uni.createInnerAudioContext();
-innerAudioContext.src = "./static/tip.mp3";
 socket.on("message", (data) => {
   if (getToken()) {
+    const innerAudioContext = uni.createInnerAudioContext();
+    innerAudioContext.src = tipMusic;
+    innerAudioContext.play();
+    innerAudioContext.destroy();
     if (data.type == "addFoods") {
-      innerAudioContext.play();
       uni.showModal({
         title: data.desk + "号桌-顾客加菜",
         content: data.msg,
@@ -23,7 +26,6 @@ socket.on("message", (data) => {
       });
     }
     if (data.type == "submitted") {
-      innerAudioContext.play();
       if (data.desk) {
         uni.showModal({
           title: "新增订单",
