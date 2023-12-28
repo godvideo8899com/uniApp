@@ -100,6 +100,7 @@ const submitOne = async () => {
         actualMoney: 0,
         desk: Number(props.queryData.desk) || "",
         userOperation: true,
+        isRead: false,
       },
       true
     );

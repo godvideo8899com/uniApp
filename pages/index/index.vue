@@ -2,6 +2,7 @@
 import dayjs from "dayjs";
 import { ref, reactive } from "vue";
 import { onPullDownRefresh, onShow, onLoad } from "@dcloudio/uni-app";
+import adBell from "../components/adBell.vue";
 import {
   orderApi,
   orderUpdateApi,
@@ -136,7 +137,7 @@ const popupConfirm2 = async () => {
         uni.navigateTo({
           url: "/pages/orderDetail/index?id=" + res,
         });
-      }, 2000);
+      }, 1000);
     }
   } catch (error) {
     popup2.value.close();
@@ -200,7 +201,7 @@ const setAllFinish = async () => {
       >
         <view
           @click.stop="toDetail(item, oName(item))"
-          class="flex shadow-lg py-[14rpx] px-[20rpx] items-center relative"
+          class="flex shadow-lg py-[20rpx] px-[20rpx] items-center relative"
           style="border: 2rpx solid #f5f5f5"
         >
           <div class="text-text2 text-14">
@@ -241,6 +242,10 @@ const setAllFinish = async () => {
             v-if="item.undoneRecord"
             >有加菜</span
           >
+
+          <adBell
+            v-if="!item.isRead && !item.isRead && !item.isFinish"
+          ></adBell>
         </view>
       </uni-swipe-action-item>
     </uni-swipe-action>

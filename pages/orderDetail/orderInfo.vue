@@ -1,20 +1,89 @@
 <script setup>
 import { orderApi, addRecordsApi } from "@/utils/api";
-import { ref } from "vue";
+import QRCode from "qrcode-generator";
+import { getToken } from "@/utils/auth";
+import { ref, onMounted } from "vue";
 import addRecords from "./addRecords.vue";
-const orderId = uni.getStorageSync("orderId");
-import { onShow } from "@dcloudio/uni-app";
+let orderId = uni.getStorageSync("orderId");
+import { onLoad } from "@dcloudio/uni-app";
+import abButton from "../components/abButton.vue";
 const orderData = ref({});
 const tasteTypes = ["正常辣", "微辣", "特辣"];
-onShow(async () => {
+onLoad(async (options) => {
+  if (options.id) {
+    orderId = options.id;
+  }
   let res = await orderApi({ id: orderId });
   orderData.value = res[0];
   let res2 = await addRecordsApi({
-    orderId: orderId || "234wert",
+    orderId: orderId || "dfs2345",
   });
   addData.value = res2;
 });
+const codeUrl = ref("");
 const addData = ref([]);
+onMounted(() => {
+  if (!getToken()) {
+    try {
+      document.getElementsByClassName("uni-page-head-btn")[0].style.display =
+        "none";
+    } catch (error) {}
+  }
+});
+const generateQRCode = (text) => {
+  const typeNumber = 0; // 自动检测最佳版本
+  const errorCorrectionLevel = "L"; // 容错级别：L、M、Q、H
+  const qr = QRCode(typeNumber, errorCorrectionLevel);
+  qr.addData(text);
+  qr.make();
+
+  // 将二维码转为 Data URL
+  const qrDataUrl = qr.createDataURL(10, 0);
+  return qrDataUrl;
+};
+const popup2 = ref(null);
+const createCode = () => {
+  codeUrl.value = generateQRCode(
+    `http://154.92.15.136:5172/#/pages/orderDetail/orderInfo?id=${orderId}`
+  );
+  popup2.value.open();
+};
+const downloadImage = () => {
+  uni.downloadFile({
+    url: codeUrl.value,
+    success(res) {
+      popup2.value.close();
+      if (res.statusCode === 200) {
+        uni.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,
+          success: (result) => {
+            uni.showToast({
+              title: "保存成功",
+              icon: "success",
+              mask: true,
+            });
+          },
+          fail: (error) => {
+            console.log(error);
+            uni.showToast({
+              title: "保存失败",
+              icon: "error",
+              mask: true,
+            });
+          },
+        });
+        // 下载成功，res.tempFilePath 是下载到本地的临时文件路径
+        console.log("图片下载成功", res.tempFilePath);
+      } else {
+        console.error("图片下载失败", res.statusCode);
+      }
+    },
+    fail(err) {
+      popup2.value.close();
+      console.error("图片下载失败", err);
+    },
+  });
+};
 </script>
 
 <template>
@@ -29,6 +98,11 @@ const addData = ref([]);
           >{{ orderData.takeMeal }}</span
         >
       </p>
+    </div>
+    <div class="p-[12px]" v-if="getToken()">
+      <abButton icon="link" @click="createCode"
+        >为此订单生成网址二维码</abButton
+      >
     </div>
     <uni-card>
       <div class="text-12">
@@ -92,6 +166,20 @@ const addData = ref([]);
         ></addRecords>
       </div>
     </uni-card>
+    <uni-popup ref="popup2" type="dialog">
+      <uni-popup-dialog
+        title="订单二维码"
+        confirmText="保存二维码"
+        :duration="2000"
+        :before-close="true"
+        @close="popup2.close()"
+        @confirm="downloadImage"
+      >
+        <div class="flex justify-center p-[12px] w-full">
+          <image :src="codeUrl" class="w-full" />
+        </div>
+      </uni-popup-dialog>
+    </uni-popup>
   </view>
 </template>
 

@@ -5,6 +5,7 @@ import { orderApi, orderUpdateApi, orderDeleteApi } from "@/utils/api";
 import { onPullDownRefresh } from "@dcloudio/uni-app";
 import abMiniButton from "../components/abMiniButton.vue";
 import AbEmpty from "../components/abEmpty.vue";
+import adBell from "../components/adBell.vue";
 const dateRange = ref([
   dayjs().subtract(1, "day").format("YYYY-MM-DD"),
   dayjs().format("YYYY-MM-DD"),
@@ -189,6 +190,7 @@ const toEdit = (item) => {
         :extra="`金额：${item.totalMoney}`"
         :key="item.id"
       >
+        <adBell v-if="!item.isRead && !item.isFinish"></adBell>
         <uni-tag
           :text="item.isFinish ? '已完成' : '未完成'"
           size="normal"
