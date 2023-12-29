@@ -157,6 +157,9 @@ const toDetail = (item, name) => {
 };
 const searchValue = ref("");
 const search = async () => {
+  if (!searchValue.value) {
+    return;
+  }
   let res = await orderApi({ id: searchValue.value });
   todayOrder.value = res;
 };
@@ -175,11 +178,50 @@ const setAllFinish = async () => {
     },
   });
 };
+const scanCode = () => {
+  uni.scanCode({
+    success: (res) => {
+      console.log(res);
+      uni.showModal({
+        title: "成功",
+        content: res.result,
+        showCancel: true,
+      });
+      toScanCode(res.result);
+    },
+    fail: (error) => {
+      uni.showModal({
+        title: "失败",
+        content: error.errMsg,
+        showCancel: true,
+      });
+      console.log(error);
+    },
+  });
+};
+const toScanCode = (url) => {
+  let pramsStr = "";
+  if (url.includes("id=")) {
+    const idValue = url.match(/id=([^&]+)/) ? url.match(/id=([^&]+)/)[1] : null;
+    pramsStr = `?id=${idValue}`;
+  }
+  if (url.includes("desk=")) {
+    const idValue = url.match(/desk=([^&]+)/)
+      ? url.match(/desk=([^&]+)/)[1]
+      : null;
+    pramsStr = `?desk=${idValue}`;
+  }
+  if (pramsStr) {
+    uni.navigateTo({
+      url: "/pages/orderDetail/index" + pramsStr,
+    });
+  }
+};
 </script>
 
 <template>
   <div class="mt-[20rpx]">
-    <div class="px-[12px] mb-[12px]">
+    <div class="px-[12px] mb-[12px] flex">
       <uni-easyinput
         clearable
         prefixIcon="search"
@@ -189,6 +231,9 @@ const setAllFinish = async () => {
         placeholder="输入订单ID精准查询"
       >
       </uni-easyinput>
+      <AbButton icon="scan" @click="scanCode" class="ml-[10px]"
+        >扫一扫</AbButton
+      >
     </div>
     <uni-swipe-action>
       <uni-swipe-action-item

@@ -96,7 +96,7 @@ const submitOne = async () => {
         isFinish: false,
         totalCount: totalCount.value,
         totalMoney: totalMoney.value,
-        orderDetail: props.list,
+        orderDetail: props.list.filter((item) => item.count > 0),
         actualMoney: 0,
         desk: Number(props.queryData.desk) || "",
         userOperation: true,
@@ -107,13 +107,13 @@ const submitOne = async () => {
     console.log(res2);
     if (!getToken()) {
       btnStutas.value = true;
+      socket.emit("message", {
+        desk: props.queryData.desk,
+        type: "submitted",
+        orderId: res2.data,
+      });
     }
     props.queryData.id = res2.data;
-    socket.emit("message", {
-      desk: props.queryData.desk,
-      type: "submitted",
-      orderId: res2.data,
-    });
     if (res2.orderFlag) {
       uni.setStorageSync("orderId", res2.data);
       uni.reLaunch({ url: "/pages/orderDetail/orderInfo" });
@@ -198,12 +198,14 @@ const submitAddFood = async () => {
   items.forEach((item) => {
     sendMsg += ` ${item.name}  x ${item.count} \n`;
   });
-  socket.emit("message", {
-    msg: sendMsg,
-    desk: props.queryData.desk,
-    type: "addFoods",
-    orderId: props.queryData.id,
-  });
+  if (!getToken()) {
+    socket.emit("message", {
+      msg: sendMsg,
+      desk: props.queryData.desk,
+      type: "addFoods",
+      orderId: props.queryData.id,
+    });
+  }
   uni.showModal({
     title: "提示",
     content: "提交成功，等待上菜吧",

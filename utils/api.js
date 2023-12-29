@@ -129,3 +129,11 @@ export function userInfoApi(data) {
         data
     })
 }
+//获取订单二维码
+export function qrCodeApi(data) {
+    return request({
+        url: '/qrCode',
+        method: 'POST',
+        data
+    })
+}

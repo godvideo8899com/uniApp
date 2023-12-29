@@ -97,7 +97,7 @@ const typeNum = computed(() => {
         return i.type == item.value && i.count;
       })
       .reduce((a, b) => {
-        return a + b.count;
+        return a + Number(b.count);
       }, 0);
   });
 

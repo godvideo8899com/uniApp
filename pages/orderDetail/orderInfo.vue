@@ -1,6 +1,5 @@
 <script setup>
-import { orderApi, addRecordsApi } from "@/utils/api";
-import QRCode from "qrcode-generator";
+import { orderApi, addRecordsApi, qrCodeApi } from "@/utils/api";
 import { getToken } from "@/utils/auth";
 import { ref, onMounted } from "vue";
 import addRecords from "./addRecords.vue";
@@ -42,45 +41,36 @@ const generateQRCode = (text) => {
   return qrDataUrl;
 };
 const popup2 = ref(null);
-const createCode = () => {
-  codeUrl.value = generateQRCode(
-    `http://154.92.15.136:5172/#/pages/orderDetail/orderInfo?id=${orderId}`
-  );
+const createCode = async () => {
+  if (codeUrl.value) {
+    return popup2.value.open();
+  }
+  let res = await qrCodeApi({ orderId: orderId });
+  console.log(res);
+  codeUrl.value = res;
   popup2.value.open();
 };
 const downloadImage = () => {
-  uni.downloadFile({
-    url: codeUrl.value,
-    success(res) {
+  console.log(codeUrl.value);
+  uni.saveImageToPhotosAlbum({
+    filePath: codeUrl.value,
+    success: (result) => {
+      uni.showToast({
+        title: "保存成功",
+        icon: "success",
+        mask: true,
+      });
       popup2.value.close();
-      if (res.statusCode === 200) {
-        uni.saveImageToPhotosAlbum({
-          filePath: res.tempFilePath,
-          success: (result) => {
-            uni.showToast({
-              title: "保存成功",
-              icon: "success",
-              mask: true,
-            });
-          },
-          fail: (error) => {
-            console.log(error);
-            uni.showToast({
-              title: "保存失败",
-              icon: "error",
-              mask: true,
-            });
-          },
-        });
-        // 下载成功，res.tempFilePath 是下载到本地的临时文件路径
-        console.log("图片下载成功", res.tempFilePath);
-      } else {
-        console.error("图片下载失败", res.statusCode);
-      }
     },
-    fail(err) {
+    fail: (error) => {
+      console.log(error);
+      uni.showModal({
+        title: "失败",
+        content: error.errMsg,
+        showCancel: true,
+        success: ({ confirm, cancel }) => {},
+      });
       popup2.value.close();
-      console.error("图片下载失败", err);
     },
   });
 };
@@ -99,7 +89,7 @@ const downloadImage = () => {
         >
       </p>
     </div>
-    <div class="p-[12px]" v-if="getToken()">
+    <div class="p-[12px] px-[16px]" v-if="getToken()">
       <abButton icon="link" @click="createCode"
         >为此订单生成网址二维码</abButton
       >
@@ -175,7 +165,7 @@ const downloadImage = () => {
         @close="popup2.close()"
         @confirm="downloadImage"
       >
-        <div class="flex justify-center p-[12px] w-full">
+        <div class="flex justify-center w-full">
           <image :src="codeUrl" class="w-full" />
         </div>
       </uni-popup-dialog>
