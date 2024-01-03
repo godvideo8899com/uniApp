@@ -11,6 +11,14 @@ socket.on("message", async (data) => {
     const innerAudioContext = uni.createInnerAudioContext();
     innerAudioContext.src = tipMusic;
     innerAudioContext.play();
+    uni.vibrateLong({
+      success: function () {
+        console.log("success");
+      },
+      fail: function (err) {
+        console.log(err);
+      },
+    });
     if (data.type == "addFoods") {
       uni.showModal({
         title: data.desk + "号桌-顾客加菜",

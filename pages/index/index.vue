@@ -182,11 +182,6 @@ const scanCode = () => {
   uni.scanCode({
     success: (res) => {
       console.log(res);
-      uni.showModal({
-        title: "成功",
-        content: res.result,
-        showCancel: true,
-      });
       toScanCode(res.result);
     },
     fail: (error) => {

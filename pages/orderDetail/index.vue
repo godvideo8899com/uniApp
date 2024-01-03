@@ -205,7 +205,11 @@ const popupOne = ref(null);
   <uni-popup ref="popupOne" type="bottom">
     <div class="p-[12px] bg-bg3">
       <abMenuList
-        :list="menuList.filter((i) => i.name.includes(searchValue))"
+        :list="
+          menuList.filter((i) =>
+            i.name.includes(searchValue ? searchValue : 'qwe12323sdss')
+          )
+        "
         :disabledBtn="disabledBtn"
       />
     </div>
