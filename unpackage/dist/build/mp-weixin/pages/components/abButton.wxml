@@ -1,0 +1,1 @@
+<button size="default" type="warn" class="py-_12rpx_" style="line-height:normal;font-size:14px"><view class="flex items-center justify-center"><uni-icons wx:if="{{a}}" class="mr-_2px_" u-i="493c0af2-0" bind:__l="__l" u-p="{{a}}"/><slot></slot></view></button>

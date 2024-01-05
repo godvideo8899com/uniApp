@@ -1,0 +1,1 @@
+<view class="flex justify-start p-0 data-v-1576bdf7"><view wx:for="{{a}}" wx:for-item="item" class="{{['flex','items-center','cursor-pointer','mr-_8rpx_','data-v-1576bdf7',item.d&&'active']}}" bindtap="{{item.e}}"><uni-icons wx:if="{{item.b}}" class="data-v-1576bdf7" u-i="{{item.a}}" bind:__l="__l" u-p="{{item.b}}"/><text class="data-v-1576bdf7">{{item.c}}</text></view></view>

@@ -1,27 +1,8 @@
 <script setup>
 import { ref, reactive, watch, onMounted } from "vue";
 import { chartBarApi } from "@/utils/api";
-import * as echarts from "echarts/core";
 import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
-import { LineChart, BarChart, PieChart } from "echarts/charts";
-import { UniversalTransition } from "echarts/features";
-import { CanvasRenderer } from "echarts/renderers";
 import dayjs from "dayjs";
-import {
-  TooltipComponent,
-  GridComponent,
-  LegendComponent,
-} from "echarts/components";
-echarts.use([
-  GridComponent,
-  LineChart,
-  PieChart,
-  BarChart,
-  CanvasRenderer,
-  UniversalTransition,
-  TooltipComponent,
-  LegendComponent,
-]);
 const dateRange = ref([
   dayjs().subtract(2, "day").format("YYYY-MM-DD"),
   dayjs().format("YYYY-MM-DD"),

@@ -31,7 +31,6 @@
     "@qiun/ucharts": "2.5.0-20230101",
     "@vitejs/plugin-vue": "^4.5.2",
     "dayjs": "^1.11.10",
-    "echarts": "^5.4.3",
     "socket.io-client": "^4.7.2"
   }
 }

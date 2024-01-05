@@ -1,0 +1,1 @@
+.bell.data-v-7631e79c{animation:wobble-hor-top-7631e79c 2s infinite both}@keyframes wobble-hor-top-7631e79c{0%,to{transform:translate(0);transform-origin:50% 50%}15%{transform:translate(-5px) rotate(6deg)}30%{transform:translate(4px) rotate(-6deg)}45%{transform:translate(-4px) rotate(3.6deg)}60%{transform:translate(4px) rotate(-2.4deg)}}
