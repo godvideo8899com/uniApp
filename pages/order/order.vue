@@ -117,6 +117,28 @@ const toEdit = (item) => {
     url: "/pages/orderDetail/index?id=" + item.id + "&name=" + item.orderName,
   });
 };
+const editName = (item) => {
+  uni.showModal({
+    title: "修改订单名",
+    content: item.orderName,
+    editable: true,
+    showCancel: true,
+    success: ({ confirm, cancel, content }) => {
+      if (confirm) {
+        orderUpdateApi({
+          id: item.id,
+          orderName: content,
+        }).then(() => {
+          item.orderName = content;
+          uni.showToast({
+            icon: "success",
+            mask: true,
+          });
+        });
+      }
+    },
+  });
+};
 </script>
 
 <template>
@@ -190,6 +212,25 @@ const toEdit = (item) => {
         :extra="`金额：${item.totalMoney}`"
         :key="item.id"
       >
+        <template #title>
+          <view class="flex items-center justify-between pt-[10px] px-[10px]">
+            <view>
+              <view class="flex items-center"
+                ><text class="mt-[2px] mr-[4px]">{{ item.orderName }}</text>
+                <uni-icons
+                  @click="editName(item)"
+                  type="compose"
+                  color="#007aff"
+                  size="20"
+                />
+              </view>
+              <view class="text-[#afaeae] text-12">{{ item.showTime }}</view>
+            </view>
+            <view class="ml-auto">
+              金额:<text class="text-text3">{{ item.totalMoney }}</text>
+            </view>
+          </view>
+        </template>
         <adBell v-if="!item.isRead && !item.isFinish"></adBell>
         <uni-tag
           :text="item.isFinish ? '已完成' : '未完成'"

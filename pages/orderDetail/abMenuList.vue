@@ -22,6 +22,10 @@ const showImg = (url) => {
     urls: [url],
   });
 };
+
+const change = (item) => {
+  uni.$emit("shake");
+};
 </script>
 
 <template>
@@ -44,7 +48,12 @@ const showImg = (url) => {
           <span class="text-text3">{{ item.price.toFixed(2) }}</span
           ><span class="text-text2 text-12">/{{ item.unit }}</span>
         </p>
-        <uni-number-box v-model="item.count" :min="0" :disabled="disabledBtn" />
+        <uni-number-box
+          v-model="item.count"
+          :min="0"
+          @change="change()"
+          :disabled="disabledBtn"
+        />
       </div>
     </li>
   </ul>
