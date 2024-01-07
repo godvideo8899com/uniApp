@@ -22,7 +22,7 @@ const logout = () => {
 <template>
   <view class="p-[16px]">
     <div class="flex items-center shadow-md p-[6px] bg-bg1 rounded-md">
-      <img src="@/static/user.png" class="w-[50px] h-[50px]" />
+      <img src="../../static/user.png" class="w-[50px] h-[50px]" />
       <view class="ml-[12px]">
         <p>
           账号：<span class="text-text3">{{ infoData.userName }}</span>

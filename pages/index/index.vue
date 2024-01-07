@@ -39,28 +39,32 @@ const queryTime = reactive({
   startTime: "",
   endTime: "",
 });
-const currentHours = dayjs().hour();
-if (currentHours < 12) {
-  (queryTime.startTime = dayjs()
-    .startOf("day")
-    .subtract(12, "hour")
-    .format("YYYY-MM-DD HH:mm:ss")),
-    (queryTime.endTime = dayjs()
-      .endOf("day")
+const formatDate = (date) => {
+  const currentHours = dayjs().hour();
+  if (currentHours < 12) {
+    (queryTime.startTime = dayjs()
+      .startOf("day")
       .subtract(12, "hour")
-      .format("YYYY-MM-DD HH:mm:ss"));
-} else {
-  (queryTime.startTime = dayjs()
-    .startOf("day")
-    .add(12, "hour")
-    .format("YYYY-MM-DD HH:mm:ss")),
-    (queryTime.endTime = dayjs()
-      .endOf("day")
+      .format("YYYY-MM-DD HH:mm:ss")),
+      (queryTime.endTime = dayjs()
+        .endOf("day")
+        .subtract(12, "hour")
+        .format("YYYY-MM-DD HH:mm:ss"));
+  } else {
+    (queryTime.startTime = dayjs()
+      .startOf("day")
       .add(12, "hour")
-      .format("YYYY-MM-DD HH:mm:ss"));
-}
+      .format("YYYY-MM-DD HH:mm:ss")),
+      (queryTime.endTime = dayjs()
+        .endOf("day")
+        .add(12, "hour")
+        .format("YYYY-MM-DD HH:mm:ss"));
+  }
+};
+formatDate();
 const todayOrder = ref([]);
 onPullDownRefresh(async () => {
+  formatDate();
   let res = await orderApi(queryTime);
   todayOrder.value = res;
   searchValue.value = "";

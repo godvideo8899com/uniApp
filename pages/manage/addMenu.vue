@@ -130,6 +130,8 @@ const rules = {
             { label: '瓶', value: '瓶' },
             { label: '件', value: '件' },
             { label: '个', value: '个' },
+            { label: '斤', value: '斤' },
+            { label: '条', value: '条' },
           ]"
         ></AbRadio>
       </uni-forms-item>

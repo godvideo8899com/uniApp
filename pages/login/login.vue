@@ -3,7 +3,7 @@ import { reactive, ref } from "vue";
 import AbButton from "../components/abButton.vue";
 import { loginApi } from "@/utils/api";
 import { setToken } from "@/utils/auth";
-import loginImg from "@/static/logo.png";
+import loginImg from "../../static/logo.png";
 const formData = reactive({
   userName: "",
   password: "",
