@@ -63,6 +63,12 @@ const addMenu = () => {
     url: "/pages/manage/addMenu",
   });
 };
+uni.$on("changeMenu", (res) => {
+  let index = productList.value.findIndex((item) => item.id == res.id);
+  if (index > -1) {
+    productList.value[index] = res;
+  }
+});
 const toEdit = (item) => {
   getApp().globalData.menuItem = item;
   uni.navigateTo({

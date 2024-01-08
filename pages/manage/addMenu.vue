@@ -38,6 +38,7 @@ const upload = async () => {
       url: `${env.baseUrl}/upload`,
       fileType: "image",
       filePath: fileValue.value.tempFilePaths[0],
+      type: "menu",
       name: "image",
       success: ({ data, statusCode }) => {
         console.log(data);
@@ -78,6 +79,7 @@ const submit = async () => {
     icon: "success",
     mask: true,
   });
+  uni.$emit("changeMenu", reqData);
   uni.navigateBack();
 };
 const rules = {

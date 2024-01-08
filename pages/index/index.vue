@@ -432,8 +432,8 @@ const downloadImage = () => {
         @close="popup3.close()"
         @confirm="downloadImage"
       >
-        <div class="flex justify-center w-full">
-          <image :src="codeUrl" class="w-full" />
+        <div class="flex justify-center w-full h-auto">
+          <img :src="codeUrl" class="w-full" />
         </div>
       </uni-popup-dialog>
     </uni-popup>
