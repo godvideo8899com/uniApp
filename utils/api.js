@@ -137,3 +137,11 @@ export function qrCodeApi(data) {
         data
     })
 }
+//生成二维码
+export function addQrCodeApi(data) {
+    return request({
+        url: '/addQrCode',
+        method: 'POST',
+        data
+    })
+}

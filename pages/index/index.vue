@@ -8,6 +8,7 @@ import {
   orderUpdateApi,
   orderAddApi,
   setFinishApi,
+  addQrCodeApi,
 } from "@/utils/api";
 import AbEmpty from "../components/abEmpty.vue";
 import AbButton from "../components/abButton.vue";
@@ -216,6 +217,48 @@ const toScanCode = (url) => {
     });
   }
 };
+const codeUrl = ref("");
+const popup3 = ref(null);
+const addQRcode = async () => {
+  uni.showModal({
+    title: "生成二维码",
+    editable: true,
+    content: "",
+    placeholderText: "桌号，可不填",
+    showCancel: true,
+    success: async ({ confirm, cancel, content }) => {
+      if (confirm) {
+        let res = await addQrCodeApi({ desk: content });
+        codeUrl.value = res;
+        popup3.value.open();
+      }
+    },
+  });
+};
+const downloadImage = () => {
+  console.log(codeUrl.value);
+  uni.saveImageToPhotosAlbum({
+    filePath: codeUrl.value,
+    success: (result) => {
+      uni.showToast({
+        title: "保存成功",
+        icon: "success",
+        mask: true,
+      });
+      popup3.value.close();
+    },
+    fail: (error) => {
+      console.log(error);
+      uni.showModal({
+        title: "失败",
+        content: error.errMsg,
+        showCancel: true,
+        success: ({ confirm, cancel }) => {},
+      });
+      popup3.value.close();
+    },
+  });
+};
 </script>
 
 <template>
@@ -303,6 +346,14 @@ const toScanCode = (url) => {
         @click="setAllFinish"
         >一键设置订单完成</AbButton
       >
+      <AbButton
+        icon="link"
+        iconColor="#000"
+        class="mt-[12px]"
+        type="default"
+        @click="addQRcode"
+        >生成顾客点餐二维码</AbButton
+      >
     </div>
     <uni-popup ref="popup1" type="dialog">
       <uni-popup-dialog
@@ -368,6 +419,21 @@ const toScanCode = (url) => {
               placeholder="请输入桌号(可不填)"
             ></uni-easyinput>
           </div>
+        </div>
+      </uni-popup-dialog>
+    </uni-popup>
+    <uni-popup ref="popup3" type="dialog">
+      <uni-popup-dialog
+        title="点餐二维码"
+        confirmText="保存二维码"
+        cancelText="关闭"
+        :duration="2000"
+        :before-close="true"
+        @close="popup3.close()"
+        @confirm="downloadImage"
+      >
+        <div class="flex justify-center w-full">
+          <image :src="codeUrl" class="w-full" />
         </div>
       </uni-popup-dialog>
     </uni-popup>
