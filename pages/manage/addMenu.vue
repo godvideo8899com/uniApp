@@ -74,13 +74,10 @@ const submit = async () => {
   } else {
     await addMenuApi(reqData);
   }
-  uni.showToast({
-    title: "成功",
-    icon: "success",
-    mask: true,
-  });
   uni.$emit("changeMenu", reqData);
-  uni.navigateBack();
+  uni.navigateBack({
+    delta: 1,
+  });
 };
 const rules = {
   name: {

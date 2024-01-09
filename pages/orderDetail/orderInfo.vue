@@ -1,5 +1,5 @@
 <script setup>
-import { orderApi, addRecordsApi, qrCodeApi } from "@/utils/api";
+import { orderApi, addRecordsApi, qrCodeApi, orderImgApi } from "@/utils/api";
 import { getToken } from "@/utils/auth";
 import { ref, onMounted } from "vue";
 import addRecords from "./addRecords.vue";
@@ -18,6 +18,10 @@ onLoad(async (options) => {
     orderId: orderId || "dfs2345",
   });
   addData.value = res2;
+  if (!getToken() && window) {
+    let res3 = await orderImgApi({ takeMeal: orderData.value.takeMeal });
+    downloadH5Image(res3);
+  }
 });
 const codeUrl = ref("");
 const addData = ref([]);
@@ -27,7 +31,9 @@ onMounted(() => {
       document.getElementsByClassName("uni-page-head-btn")[0].style.display =
         "none";
     } catch (error) {}
+  } else {
   }
+  console.log(window);
 });
 const generateQRCode = (text) => {
   const typeNumber = 0; // 自动检测最佳版本
@@ -72,6 +78,33 @@ const downloadImage = () => {
       });
       popup2.value.close();
     },
+  });
+};
+function downloadH5Image(url) {
+  let image = new Image();
+  image.setAttribute("crossOrigin", "anonymous");
+  image.src = url;
+  image.onload = () => {
+    let canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+    let ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0, image.width, image.height);
+    canvas.toBlob((img) => {
+      var imgUrl = URL.createObjectURL(img);
+      download(imgUrl);
+    });
+  };
+}
+const download = (url) => {
+  let a = document.createElement("a");
+  a.download = "order.jpg";
+  a.href = url;
+  a.click();
+  uni.showToast({
+    title: "取餐号已下载",
+    icon: "success",
+    mask: true,
   });
 };
 </script>

@@ -2,6 +2,7 @@
 import { orderApi, menuApi, orderUpdateApi, orderAddApi } from "@/utils/api";
 import { ref, computed, provide } from "vue";
 import { onPullDownRefresh, onLoad } from "@dcloudio/uni-app";
+import { getToken } from "@/utils/auth";
 import abMenuList from "./abMenuList.vue";
 import orderBottom from "./orderBottom.vue";
 import { selectList } from "@/store/globalStore";
@@ -29,8 +30,14 @@ const disabledBtn = computed(() => {
   return userMenu.value?.isFinish || (queryData.value.desk && btnStutas.value);
 });
 const initOrder = async () => {
-  let mRes = await menuApi({ filter: true });
-  menuList.value = mRes;
+  let storeMenu = uni.getStorageSync("menuList");
+  if (storeMenu && getToken()) {
+    menuList.value = storeMenu;
+  } else {
+    let mRes = await menuApi({ filter: true });
+    menuList.value = mRes;
+    uni.setStorageSync("menuList", mRes);
+  }
   menuList.value.forEach((element) => {
     element.count = 0;
   });
@@ -47,7 +54,7 @@ const initOrder = async () => {
     };
   }
   if (Object.keys(from).length) {
-    let res = await orderApi(from);
+    let res = await orderApi(from, true);
     if (!res.length) {
       return;
     }

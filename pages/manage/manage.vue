@@ -20,6 +20,9 @@ const getList = async () => {
   }
   let res = await menuApi(form);
   productList.value = res;
+  if (JSON.stringify(form) == "{}") {
+    uni.setStorageSync("menuList", res);
+  }
   uni.stopPullDownRefresh();
 };
 //合并两个数组
@@ -42,6 +45,7 @@ const toDelete = async (item) => {
             productList.value = productList.value.filter(
               (i) => i.id != item.id
             );
+            uni.setStorageSync("menuList", productList.value);
           })
           .catch((err) => {
             uni.showToast({
@@ -56,6 +60,7 @@ onPullDownRefresh(async () => {
   sIndex.value = 0;
   let res = await menuApi({ type: sIndex.value });
   productList.value = res;
+  uni.setStorageSync("menuList", res);
   uni.stopPullDownRefresh();
 });
 const addMenu = () => {
@@ -64,10 +69,16 @@ const addMenu = () => {
   });
 };
 uni.$on("changeMenu", (res) => {
-  let index = productList.value.findIndex((item) => item.id == res.id);
-  if (index > -1) {
-    productList.value[index] = res;
-  }
+  sIndex.value = 0;
+  menuApi({ type: sIndex.value }).then((res) => {
+    productList.value = res;
+    uni.setStorageSync("menuList", res);
+  });
+  uni.showToast({
+    title: "成功",
+    icon: "success",
+    mask: true,
+  });
 });
 const toEdit = (item) => {
   getApp().globalData.menuItem = item;

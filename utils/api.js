@@ -2,11 +2,12 @@ import request from './request';
 /**
  *    登陆请求
  */
-export function orderApi(data) {
+export function orderApi(data,hideLoading) {
 	return request({
 		url: '/orderList',
 		method: 'POST',
-		data
+		data,
+        hideLoading
 	})
 }
 export function orderUpdateApi(data) {
@@ -141,6 +142,14 @@ export function qrCodeApi(data) {
 export function addQrCodeApi(data) {
     return request({
         url: '/addQrCode',
+        method: 'POST',
+        data
+    })
+}
+//生成订单图片
+export function orderImgApi(data) {
+    return request({
+        url: '/orderImg',
         method: 'POST',
         data
     })

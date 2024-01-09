@@ -24,10 +24,14 @@ function service(options = {},resFlag) {
 			'Authorization': `Bearer ${getToken()}`	// 这里是token(可自行修改)
 		};
 	}
-    uni.showLoading({
-        title: "加载中",
-        mask: true,
-      });
+	if(!options.hideLoading){
+		uni.showLoading({
+			title: "加载中",
+			mask: true,
+		  });
+	}
+		
+    
 	return new Promise((resolved, rejected) => {
 		options.success = (res) => {
             console.log(res);
