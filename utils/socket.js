@@ -1,8 +1,9 @@
 // import io from "socket.io-client";
 import io from '@hyoga/uni-socket.io';
-let socketUrl = "http://154.92.15.136:9000";
+import httpPort from "./port";
+let socketUrl = `http://154.92.15.136:${httpPort.socketPort}`;
 if (window&&window.location.hostname == "localhost") {
-  socketUrl = "http://127.0.0.1:9000";
+  socketUrl = `http://127.0.0.1:${httpPort.socketPort}`;
 }
 
 const socket = io(socketUrl, {

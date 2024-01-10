@@ -18,7 +18,7 @@ onLoad(async (options) => {
     orderId: orderId || "dfs2345",
   });
   addData.value = res2;
-  if (!getToken() && window) {
+  if (!getToken() && window && orderData.value.takeMeal) {
     let res3 = await orderImgApi({ takeMeal: orderData.value.takeMeal });
     downloadH5Image(res3);
   }
