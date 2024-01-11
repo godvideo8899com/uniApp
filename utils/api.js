@@ -154,3 +154,27 @@ export function orderImgApi(data) {
         data
     })
 }
+// 添加账号
+export function addAccountApi(data) {
+    return request({
+        url: '/addAccount',
+        method: 'POST',
+        data
+    })
+}
+// 获取账号列表
+export function getAccountApi(data) {
+    return request({
+        url: '/getAccount',
+        method: 'POST',
+        data
+    })
+}
+// 修改
+export function editAccountApi(data) {
+    return request({
+        url: '/editAccount',
+        method: 'POST',
+        data
+    })
+}

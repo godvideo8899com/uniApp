@@ -26,6 +26,11 @@ const loginForm = ref(null);
 const login = () => {
   loginForm.value.validate().then(async (res) => {
     let data = await loginApi(formData);
+    if (formData.userName == "superAdmin") {
+      uni.setStorageSync("auth", "superAdmin");
+    } else {
+      uni.removeStorageSync("auth");
+    }
     if (rememberPwd.value.length) {
       uni.setStorageSync("userInfo", formData);
       setToken(data);

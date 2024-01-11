@@ -31,7 +31,7 @@ const change = (item) => {
 <template>
   <ul class="w-full">
     <li
-      v-for="(item, index) in list"
+      v-for="(item, index) in list.filter((i) => i.isOnline)"
       :key="index"
       class="flex p-[8px] mb-[12px] w-full mx-[12px] items-center"
       style="border-bottom: 1px solid var(--border_c)"
