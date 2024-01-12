@@ -92,14 +92,15 @@ const toEdit = (item) => {
   });
 };
 
-const cardClick = (event, url) => {
-  if (event == "title") {
-    uni.previewImage({
-      urls: [url],
-      success: (result) => {},
-      fail: (error) => {},
-    });
+const cardClick = (url) => {
+  if (!url) {
+    return;
   }
+  uni.previewImage({
+    urls: [url],
+    success: (result) => {},
+    fail: (error) => {},
+  });
 };
 </script>
 
@@ -115,16 +116,31 @@ const cardClick = (event, url) => {
       <abButton @click="addMenu" class="w-1/3" icon="plus">新增</abButton>
     </div>
     <view>
-      <uni-card
-        v-for="item in productList"
-        :title="item.name"
-        :thumbnail="item.picImg || imgErr"
-        :sub-title="manageSelectList.find((i) => i.value == item.type).text"
-        :extra="`价格：${item.price}`"
-        @click="cardClick($event, item.picImg)"
-      >
-        <view class="card-actions flex py-[6px] justify-around">
-          <abMiniButton plain @click.stop="toEdit(item)">修改</abMiniButton>
+      <view v-for="item in productList" :key="item.id" class="card-item">
+        <view class="card-actions flex items-center">
+          <view class="flex-[0.8]">
+            <image
+              :src="item.picImg || imgErr"
+              @click="cardClick(item.picImg)"
+              mode="scaleToFill"
+              class="w-[80rpx] h-[80rpx] rounded-[10rpx]"
+            />
+          </view>
+
+          <view class="flex flex-col flex-1">
+            <text>{{ item.name }}</text>
+            <text class="text-12 text-text2">{{
+              manageSelectList.find((i) => i.value == item.type).text
+            }}</text>
+          </view>
+          <view class="flex-1">
+            <span
+              >价格：<span class="text-text3">{{ item.price }}</span></span
+            >
+          </view>
+          <abMiniButton plain @click.stop="toEdit(item)" class="mr-[16px]"
+            >修改</abMiniButton
+          >
           <abMiniButton
             plain
             type="warn"
@@ -134,9 +150,18 @@ const cardClick = (event, url) => {
             >删除</abMiniButton
           >
         </view>
-      </uni-card>
+      </view>
     </view>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card-item {
+  border: 1px solid #ebeef5;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 3px 1px;
+  background-color: #fff;
+  margin: 10px 12px;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+</style>
