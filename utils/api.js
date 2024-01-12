@@ -178,3 +178,11 @@ export function editAccountApi(data) {
         data
     })
 }
+//检查订单状态
+export function checkOrderStatusApi(data) {
+    return request({
+        url: '/checkOrderStatus',
+        method: 'POST',
+        data
+    })
+}

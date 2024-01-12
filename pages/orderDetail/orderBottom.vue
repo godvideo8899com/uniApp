@@ -13,6 +13,7 @@ import {
   orderAddApi,
   addFoodsApi,
   addRecordsApi,
+  checkOrderStatusApi,
 } from "@/utils/api";
 const props = defineProps({
   list: {
@@ -36,6 +37,18 @@ const props = defineProps({
     default: () => [],
   },
 });
+const userOrderId = uni.getStorageSync("userOrderId");
+console.log(userOrderId);
+if (userOrderId) {
+  checkOrderStatusApi({ id: userOrderId }).then((res) => {
+    if (res) {
+      uni.reLaunch({ url: "/pages/orderDetail/orderInfo" });
+    } else {
+      uni.removeStorageSync("userOrderId");
+    }
+  });
+}
+const deviceNo = ref("");
 const btnStutas = inject("btnStutas");
 const socket = inject("socket");
 const emits = defineEmits([
@@ -58,6 +71,10 @@ const totalCount = computed(() => {
   return total;
 });
 const submitOne = async () => {
+  if (window?.Fingerprint2 && !getToken()) {
+    let res = await getDeviceNo();
+    deviceNo.value = res;
+  }
   if (!props.isChange) {
     uni.showToast({
       title: "没有更改，无需提交",
@@ -100,6 +117,7 @@ const submitOne = async () => {
     emits("setCloneData");
   } else {
     let time = dayjs().format("HH:mm");
+    console.log(deviceNo.value);
     let res2 = await orderAddApi(
       {
         orderName: time + "-" + props.queryData.desk + "号桌",
@@ -113,6 +131,7 @@ const submitOne = async () => {
         desk: Number(props.queryData.desk) || "",
         userOperation: true,
         isRead: false,
+        deviceNo: deviceNo.value,
       },
       true
     );
@@ -128,6 +147,7 @@ const submitOne = async () => {
     props.queryData.id = res2.data;
     if (res2.orderFlag) {
       uni.setStorageSync("orderId", res2.data);
+      uni.setStorageSync("userOrderId", res2.data);
       uni.reLaunch({ url: "/pages/orderDetail/orderInfo" });
     }
     popupTwo.value.close();
@@ -308,6 +328,21 @@ const onMove = () => {
 uni.$on("shake", (data) => {
   onMove();
 });
+const getDeviceNo = () => {
+  return new Promise((resolve, reject) => {
+    Fingerprint2.get(function (components) {
+      const values = components.map(function (component, index) {
+        if (index === 0) {
+          return component.value.replace(/\bNetType\/\w+\b/, "");
+        }
+        return component.value;
+      });
+      // 生成最终id murmur
+      const murmur = Fingerprint2.x64hash128(values.join(""), 31);
+      resolve(murmur);
+    });
+  });
+};
 </script>
 
 <template>

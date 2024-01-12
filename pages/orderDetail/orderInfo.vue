@@ -6,6 +6,7 @@ import addRecords from "./addRecords.vue";
 let orderId = uni.getStorageSync("orderId");
 import { onLoad } from "@dcloudio/uni-app";
 import abButton from "../components/abButton.vue";
+let userOrderId = uni.getStorageSync("userOrderId");
 const orderData = ref({});
 const tasteTypes = ["正常辣", "微辣", "特辣"];
 onLoad(async (options) => {
@@ -18,10 +19,10 @@ onLoad(async (options) => {
     orderId: orderId || "dfs2345",
   });
   addData.value = res2;
-  if (!getToken() && window && orderData.value.takeMeal) {
-    let res3 = await orderImgApi({ takeMeal: orderData.value.takeMeal });
-    downloadH5Image(res3);
-  }
+  // if (!getToken() && window && orderData.value.takeMeal) {
+  //   let res3 = await orderImgApi({ takeMeal: orderData.value.takeMeal });
+  //   downloadH5Image(res3);
+  // }
 });
 const codeUrl = ref("");
 const addData = ref([]);
@@ -107,6 +108,10 @@ const download = (url) => {
     mask: true,
   });
 };
+const addOrder = () => {
+  uni.removeStorageSync("userOrderId");
+  uni.reLaunch({ url: "/pages/orderDetail/index" });
+};
 </script>
 
 <template>
@@ -157,6 +162,9 @@ const download = (url) => {
             }}</span></span
           >
           <span>商品总数：{{ orderData.totalCount }}</span>
+          <span v-if="orderData.deviceNo && getToken()"
+            >设备：{{ orderData.deviceNo }}</span
+          >
         </div>
         <p>订单ID：{{ orderData.id }}</p>
         <p>创建时间：{{ orderData.showTime }}</p>
@@ -189,6 +197,9 @@ const download = (url) => {
         ></addRecords>
       </div>
     </uni-card>
+    <view class="m-[14px]" v-if="userOrderId && !getToken()">
+      <abButton @click="addOrder">继续添加订单</abButton>
+    </view>
     <uni-popup ref="popup2" type="dialog">
       <uni-popup-dialog
         title="订单二维码"

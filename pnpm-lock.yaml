@@ -2,11 +2,13 @@ lockfileVersion: 5.4
 
 specifiers:
   '@dcloudio/uni-app': 2.0.2-3090820231124001
+  '@fingerprintjs/fingerprintjs': ^4.2.1
   '@hyoga/uni-socket.io': ^3.0.4
   '@qiun/ucharts': 2.5.0-20230101
   '@vitejs/plugin-vue': ^4.5.2
   autoprefixer: ^10.4.16
   dayjs: ^1.11.10
+  fingerprintjs2: ^2.1.4
   postcss: ^8.4.31
   postcss-rem-to-responsive-pixel: ^6.0.1
   socket.io-client: ^4.7.2
@@ -16,10 +18,12 @@ specifiers:
 
 dependencies:
   '@dcloudio/uni-app': 2.0.2-3090820231124001
+  '@fingerprintjs/fingerprintjs': 4.2.1
   '@hyoga/uni-socket.io': 3.0.4
   '@qiun/ucharts': 2.5.0-20230101
   '@vitejs/plugin-vue': 4.5.2
   dayjs: 1.11.10
+  fingerprintjs2: 2.1.4
   socket.io-client: 4.7.2
 
 devDependencies:
@@ -174,6 +178,12 @@ packages:
     peerDependencies:
       '@dcloudio/types': ^3.0.15
       '@vue/composition-api': ^1.7.0
+    dev: false
+
+  /@fingerprintjs/fingerprintjs/4.2.1:
+    resolution: {integrity: sha512-uW+GVUNTgCXbVPEbgnbf5Aor22e1dyYR0JRwdUiZBaikfxr7KlhV9y0aahA1FB99fEeQVvhCEvTcPIFSYTy9Pw==}
+    dependencies:
+      tslib: 2.6.2
     dev: false
 
   /@hyoga/uni-socket.io/3.0.4:
@@ -598,6 +608,11 @@ packages:
     dependencies:
       to-regex-range: 5.0.1
     dev: true
+
+  /fingerprintjs2/2.1.4:
+    resolution: {integrity: sha512-veP2yVsnYvjDVkzZMyIEwpqCAQfsBLH+U4PK5MlFAnLjZrttbdRqEArE1fPcnJFz5oS5CrdONbsV7J6FGpIJEQ==}
+    deprecated: Package has been renamed to @fingerprintjs/fingerprintjs. Install @fingerprintjs/fingerprintjs to get updates.
+    dev: false
 
   /flat/5.0.2:
     resolution: {integrity: sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==}
@@ -1265,6 +1280,10 @@ packages:
   /ts-interface-checker/0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
+
+  /tslib/2.6.2:
+    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
+    dev: false
 
   /typescript/5.3.3:
     resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}

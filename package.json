@@ -27,10 +27,12 @@
   },
   "dependencies": {
     "@dcloudio/uni-app": "2.0.2-3090820231124001",
+    "@fingerprintjs/fingerprintjs": "^4.2.1",
     "@hyoga/uni-socket.io": "^3.0.4",
     "@qiun/ucharts": "2.5.0-20230101",
     "@vitejs/plugin-vue": "^4.5.2",
     "dayjs": "^1.11.10",
+    "fingerprintjs2": "^2.1.4",
     "socket.io-client": "^4.7.2"
   }
 }
