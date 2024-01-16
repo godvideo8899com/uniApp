@@ -16,12 +16,16 @@ const submit = async () => {
     });
     return;
   }
+  uni.showLoading({
+    mask: true,
+  });
   let index = 0;
   for (const iterator of form.files) {
     await upload(index);
     index++;
   }
   let res = await addArticleApi(form);
+  uni.hideLoading();
   uni.showToast({
     title: "添加成功",
     icon: "success",
