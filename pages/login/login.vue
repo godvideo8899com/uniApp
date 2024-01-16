@@ -33,16 +33,15 @@ const login = () => {
     }
     if (rememberPwd.value.length) {
       uni.setStorageSync("userInfo", formData);
-      setToken(data);
-      uni.reLaunch({
-        url: "/pages/index/index",
-        animationType: "pop-in",
-        animationDuration: 200,
-      });
-      uni;
     } else {
       uni.removeStorageSync("userInfo");
     }
+    setToken(data);
+    uni.reLaunch({
+      url: "/pages/index/index",
+      animationType: "pop-in",
+      animationDuration: 200,
+    });
   });
 };
 const rules = {

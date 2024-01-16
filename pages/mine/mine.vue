@@ -107,6 +107,9 @@ const editAccount = () => {
   });
 };
 const userRange = ref([]);
+const toMyArticle = () => {
+  uni.navigateTo({ url: "/pages/article/article" });
+};
 </script>
 
 <template>
@@ -177,6 +180,15 @@ const userRange = ref([]);
         <span class="ml-auto text-text3 text-16 font-bold">
           {{ infoData.discountedMoney }}
         </span>
+      </li>
+      <li
+        v-if="authValue == 'superAdmin'"
+        class="flex items-center shadow-md p-[12px] bg-bg1 rounded-md mt-[12px]"
+        @click="toMyArticle"
+      >
+        <image src="@/static/article-line.svg" class="w-[20px] h-[20px]" />
+        <span class="ml-[2px]"> 我的添加的文章 </span>
+        <uni-icons class="ml-auto" type="arrowright" color="" size="20" />
       </li>
       <li
         v-if="authValue == 'superAdmin'"

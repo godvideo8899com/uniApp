@@ -1,7 +1,6 @@
 // import io from "socket.io-client";
 import io from '@hyoga/uni-socket.io';
 import httpPort from "./port";
-// console.log(windowPort);
 var realPort=''
 if(window&&window.hasOwnProperty("windowPort")){
 	 realPort= window.windowPort

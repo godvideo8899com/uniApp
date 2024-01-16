@@ -186,3 +186,19 @@ export function checkOrderStatusApi(data) {
         data
     })
 }
+//获取文章列表
+export function articleListApi(data) {   
+    return request({
+        url: '/articleList',
+        method: 'POST',
+        data
+    })
+}
+//添加文章
+export function addArticleApi(data) {   
+    return request({
+        url: '/addArticle',
+        method: 'POST',
+        data
+    })
+}
