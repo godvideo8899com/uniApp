@@ -3,6 +3,7 @@ import request from './request';
  *    登陆请求
  */
 export function orderApi(data,hideLoading) {
+    data.merchantID=uni.getStorageSync("merchantID")
 	return request({
 		url: '/orderList',
 		method: 'POST',
@@ -19,6 +20,7 @@ export function orderUpdateApi(data) {
 }
 // 添加订单
 export function orderAddApi(data,res) {
+    data.merchantID=uni.getStorageSync("merchantID")
 	return request({
 		url: '/addOrder',
 		method: 'POST',
@@ -44,6 +46,7 @@ export function loginApi(data) {
 }
 // 获取菜单
 export function menuApi(data) {
+    data.merchantID=uni.getStorageSync("merchantID")
     return request({
         url: '/getMenu',
         method: 'POST',
@@ -60,6 +63,7 @@ export function deleteMenuApi(data) {
 }
 // 添加菜单
 export function addMenuApi(data) {
+    data.merchantID=uni.getStorageSync("merchantID")
     return request({
         url: '/addMenu',
         method: 'POST',
@@ -108,6 +112,7 @@ export function updateRecordsApi(data) {
 }
 //统计数据
 export function chartBarApi(data) {
+    data.merchantID=uni.getStorageSync("merchantID")
     return request({
         url: '/chartBar',
         method: 'POST',
@@ -116,6 +121,7 @@ export function chartBarApi(data) {
 }
 //设置订单一键完成
 export function setFinishApi(data) {
+    data={merchantID:uni.getStorageSync("merchantID")}
     return request({
         url: '/oneKeyFinish',
         method: 'POST',
@@ -124,7 +130,7 @@ export function setFinishApi(data) {
 }
 //获取用户信息
 export function userInfoApi(data) {
-    return request({
+       return request({
         url: '/userinfo',
         method: 'POST',
         data
@@ -140,6 +146,7 @@ export function qrCodeApi(data) {
 }
 //生成二维码
 export function addQrCodeApi(data) {
+    data.merchantID=uni.getStorageSync("merchantID")
     return request({
         url: '/addQrCode',
         method: 'POST',

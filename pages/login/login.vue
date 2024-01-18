@@ -36,7 +36,9 @@ const login = () => {
     } else {
       uni.removeStorageSync("userInfo");
     }
-    setToken(data);
+    setToken(data.tokenStr);
+    console.log(data.merchantID);
+    uni.setStorageSync("merchantID", data.merchantID);
     uni.reLaunch({
       url: "/pages/index/index",
       animationType: "pop-in",

@@ -14,6 +14,7 @@ const oIndex = ref(0);
 let cloneData = ref([]);
 const queryData = ref({});
 onLoad(async (options) => {
+  options.merchantID && uni.setStorageSync("merchantID", options.merchantID);
   queryData.value = options;
   let title = "欢迎点餐";
   if (options.name || options.desk) {
