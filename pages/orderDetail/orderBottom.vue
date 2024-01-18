@@ -142,6 +142,7 @@ const submitOne = async () => {
         desk: props.queryData.desk,
         type: "submitted",
         orderId: res2.data,
+        merchantID: uni.getStorageSync("merchantID"),
       });
     }
     props.queryData.id = res2.data;
@@ -236,6 +237,7 @@ const submitAddFood = async () => {
       desk: props.queryData.desk,
       type: "addFoods",
       orderId: props.queryData.id,
+      merchantID: uni.getStorageSync("merchantID"),
     });
   }
   uni.showModal({
@@ -286,7 +288,12 @@ const setDesk = async () => {
   });
 };
 socket.on("message", (data) => {
-  if (props.queryData.desk && props.queryData.desk == data.desk) {
+  let merchantID = uni.getStorageSync("merchantID");
+  if (
+    props.queryData.desk &&
+    props.queryData.desk == data.desk &&
+    merchantID == data.merchantID
+  ) {
     if (data.type == "submitted") {
       uni.showModal({
         title: "提示",

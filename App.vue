@@ -7,7 +7,8 @@ import tipMusic from "./static/tip.mp3";
 console.log(tipMusic);
 provide("socket", socket);
 socket.on("message", async (data) => {
-  if (getToken()) {
+  let merchantID = uni.getStorageSync("merchantID");
+  if (getToken() && merchantID == data.merchantID) {
     const innerAudioContext = uni.createInnerAudioContext();
     innerAudioContext.src = tipMusic;
     innerAudioContext.play();
