@@ -209,3 +209,11 @@ export function addArticleApi(data) {
         data
     })
 }
+//删除文章
+export function deleteArticleApi(data) {   
+    return request({
+        url: '/deleteArticle',
+        method: 'POST',
+        data
+    })
+}

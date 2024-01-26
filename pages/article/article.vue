@@ -3,7 +3,7 @@ import { ref } from "vue";
 import AbButton from "../components/abButton.vue";
 import abMiniButton from "../components/abMiniButton.vue";
 import { onPullDownRefresh } from "@dcloudio/uni-app";
-import { articleListApi } from "@/utils/api";
+import { articleListApi, deleteArticleApi } from "@/utils/api";
 import { isImageURL } from "@/utils/utils";
 const recordsList = ref([
   {
@@ -64,6 +64,14 @@ const download = (url) => {
     });
   }
 };
+const deleteItem = async (id) => {
+  await deleteArticleApi({ id });
+  recordsList.value.forEach((item, index) => {
+    if (item._id == id) {
+      recordsList.value.splice(index, 1);
+    }
+  });
+};
 </script>
 
 <template>
@@ -94,13 +102,6 @@ const download = (url) => {
           <view class="pb-[10px]">
             <view class="text-left relative" v-if="item.content">
               <text>{{ item.content }}</text>
-              <abMiniButton
-                icon="copy"
-                class="absolute bottom-[-3px]"
-                @click="copy(item.content)"
-              >
-                复制文本</abMiniButton
-              >
             </view>
             <view class="mt-[8px]" style="border: 1px solid #eee">
               <view
@@ -122,6 +123,22 @@ const download = (url) => {
                   >下载</abMiniButton
                 >
               </view>
+            </view>
+            <view class="text-text3 flex">
+              <abMiniButton
+                icon="copy"
+                class="bottom-[-3px]"
+                @click="copy(item.content)"
+              >
+                复制文本</abMiniButton
+              >
+              <abMiniButton
+                icon="copy"
+                class="bottom-[-3px]"
+                @click="deleteItem(item._id)"
+              >
+                删除</abMiniButton
+              >
             </view>
           </view>
         </uni-collapse-item>
