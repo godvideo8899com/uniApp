@@ -31,7 +31,9 @@ const formData1 = reactive({
   userName: "",
   password: "",
   expireDate: dayjs().format("YYYY-MM-DD"),
+  syncMerchantID: "",
 });
+const syncAccount = ref("");
 const formData2 = reactive({
   userName: "",
   expireDate: dayjs().format("YYYY-MM-DD"),
@@ -68,7 +70,7 @@ const rules1 = {
 const addAccount = () => {
   addForm.value.validate().then(async (res) => {
     try {
-      let res1 = await addAccountApi(res);
+      let res1 = await addAccountApi(formData1);
       addPopup.value.close();
       uni.showToast({
         title: "添加成功",
@@ -86,11 +88,22 @@ const openPopup = async () => {
   userRange.value = res;
   editPopup.value.open();
 };
+const openPopup2 = async () => {
+  let res = await getAccountApi();
+  userRange.value = res;
+  addPopup.value.open();
+};
 const changeUser = () => {
   formData2.expireDate = userRange.value.find(
     (item) => item.value == formData2.userName
   ).expireDate;
 };
+const changeUser2 = (item2) => {
+  formData1.syncMerchantID = userRange.value.find(
+    (item) => item.value == item2
+  )?.merchantID;
+};
+
 const editAccount = () => {
   editForm.value.validate().then(async (res) => {
     try {
@@ -194,7 +207,7 @@ const toMyArticle = () => {
         v-if="authValue == 'superAdmin'"
         class="flex items-center shadow-md p-[12px] bg-bg1 rounded-md mt-[12px]"
       >
-        <ab-button type="primary" icon="plusempty" @click="addPopup.open()"
+        <ab-button type="primary" icon="plusempty" @click="openPopup2"
           >添加账户</ab-button
         >
         <ab-button type="primary" icon="compose" @click="openPopup"
@@ -215,14 +228,14 @@ const toMyArticle = () => {
         @confirm="addAccount"
       >
         <uni-forms :modelValue="formData1" ref="addForm" :rules="rules1">
-          <uni-forms-item label="用户名:" name="userName">
+          <uni-forms-item label="用户名:" name="userName" required>
             <uni-easyinput
               type="text"
               v-model="formData1.userName"
               placeholder="请输入用户名"
             />
           </uni-forms-item>
-          <uni-forms-item label="密码:" name="password">
+          <uni-forms-item label="密码:" name="password" required>
             <uni-easyinput
               type="text"
               v-model="formData1.password"
@@ -236,6 +249,14 @@ const toMyArticle = () => {
               :end="endDate"
               type="date"
             />
+          </uni-forms-item>
+          <uni-forms-item label="同步菜品">
+            <uni-data-select
+              v-model="syncAccount"
+              :localdata="userRange"
+              @change="changeUser2"
+              placeholder="请选择同步的商户"
+            ></uni-data-select>
           </uni-forms-item>
         </uni-forms>
       </uni-popup-dialog>
