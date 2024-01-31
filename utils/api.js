@@ -3,7 +3,9 @@ import request from './request';
  *    登陆请求
  */
 export function orderApi(data,hideLoading) {
-    data.merchantID=uni.getStorageSync("merchantID")
+    if(!data.id){
+        data.merchantID=uni.getStorageSync("merchantID")
+    }
 	return request({
 		url: '/orderList',
 		method: 'POST',
