@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import AbButton from "../components/abButton.vue";
-import { loginApi } from "@/utils/api";
+import { loginApi, menuApi } from "@/utils/api";
 import { setToken } from "@/utils/auth";
 import loginImg from "../../static/logo.png";
 const formData = reactive({
@@ -39,6 +39,8 @@ const login = () => {
     setToken(data.tokenStr);
     console.log(data.merchantID);
     uni.setStorageSync("merchantID", data.merchantID);
+    let resMenu = await menuApi({});
+    uni.setStorageSync("menuList", resMenu);
     uni.reLaunch({
       url: "/pages/index/index",
       animationType: "pop-in",
