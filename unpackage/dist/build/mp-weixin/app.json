@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/order/order",
+    "pages/manage/manage",
+    "pages/statistic/statistic",
+    "pages/mine/mine",
+    "pages/manage/addMenu",
+    "pages/login/login",
+    "pages/orderDetail/index",
+    "pages/orderDetail/orderInfo"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#fa2c19",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "#ccc",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "meta": {},
+        "iconPath": "static/home-alt.png",
+        "selectedIconPath": "static/home-alt-a.png"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "订单",
+        "iconPath": "static/order-approve-outline.png",
+        "selectedIconPath": "static/order-approve-outline-a.png",
+        "meta": {}
+      },
+      {
+        "pagePath": "pages/manage/manage",
+        "text": "管理",
+        "iconPath": "static/bookmark-manager-outline.png",
+        "selectedIconPath": "static/bookmark-manager-outline-a.png",
+        "meta": {}
+      },
+      {
+        "pagePath": "pages/statistic/statistic",
+        "text": "统计",
+        "iconPath": "static/statistic-up.png",
+        "selectedIconPath": "static/statistic-up-a.png",
+        "meta": {}
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "static/user-2-line.png",
+        "selectedIconPath": "static/user-2-line-a.png",
+        "meta": {}
+      }
+    ]
+  },
+  "usingComponents": {}
+}

@@ -9,9 +9,9 @@ if(window&&window.hasOwnProperty("windowPort")){
 }
 
 let socketUrl = `http://154.92.15.136:${realPort.socketPort}`;
-// if (window&&window.location.hostname == "localhost") {
-//   socketUrl = `http://127.0.0.1:${realPort.socketPort}`;
-// }
+if (window&&window.location.hostname == "localhost") {
+  socketUrl = `http://127.0.0.1:${realPort.socketPort}`;
+}
 
 const socket = io(socketUrl, {
   query: {},

@@ -1,0 +1,8 @@
+{
+  "navigationBarTextStyle": "#fa2c19",
+  "navigationBarTitleText": "个人中心",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "ab-button": "../components/abButton"
+  }
+}

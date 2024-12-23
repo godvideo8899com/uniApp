@@ -2,7 +2,6 @@
 import dayjs from "dayjs";
 import { ref, reactive } from "vue";
 import { onPullDownRefresh, onShow, onLoad } from "@dcloudio/uni-app";
-import { useRequest } from "vue-hooks-plus";
 import adBell from "../components/adBell.vue";
 import {
   orderApi,
@@ -18,6 +17,7 @@ import { getToken } from "@/utils/auth";
 import { authTokenApi } from "@/utils/api";
 let token = getToken();
 uni.$on("setAdd", function (data) {
+  console.log(data);
   let deskIndex = todayOrder.value.findIndex((item) => {
     return item.desk == data.desk;
   });
@@ -63,15 +63,11 @@ const formatDate = (date) => {
   }
 };
 formatDate();
-const { data: todayOrder, run: orderListRun } = useRequest(orderApi, {
-  defaultParams: [queryTime],
-  refreshOnWindowFocus: true,
-  cacheKey: "cacheKey-todayOrder",
-});
-
+const todayOrder = ref([]);
 onPullDownRefresh(async () => {
   formatDate();
-  orderListRun(queryTime);
+  let res = await orderApi(queryTime);
+  todayOrder.value = res;
   searchValue.value = "";
   uni.stopPullDownRefresh();
 });
@@ -105,7 +101,8 @@ const popupConfirm = async () => {
     icon: "success",
     mask: true,
   });
-  orderListRun(queryTime);
+  let res = await orderApi(queryTime);
+  todayOrder.value = res;
   popup1.value.close();
 };
 const popup2 = ref(null);
@@ -151,10 +148,10 @@ const popupConfirm2 = async () => {
     popup2.value.close();
   }
 };
-// onShow(async () => {
-//   let res = await orderApi(queryTime);
-//   todayOrder.value = res;
-// });
+onShow(async () => {
+  let res = await orderApi(queryTime);
+  todayOrder.value = res;
+});
 const oName = (item) => {
   return item.orderName + (item.desk ? "-" + item.desk + "号桌" : "");
 };
@@ -168,7 +165,8 @@ const search = async () => {
   if (!searchValue.value) {
     return;
   }
-  orderListRun({ id: searchValue.value });
+  let res = await orderApi({ id: searchValue.value });
+  todayOrder.value = res;
 };
 const setAllFinish = async () => {
   uni.showModal({
@@ -338,7 +336,7 @@ const downloadImage = () => {
         </view>
       </uni-swipe-action-item>
     </uni-swipe-action>
-    <AbEmpty v-if="todayOrder?.length === 0" />
+    <AbEmpty v-if="todayOrder.length === 0" />
     <div class="px-[20rpx] mt-[20rpx] pb-[20px]">
       <AbButton icon="plusempty" @click="addDialog">新增订单</AbButton>
       <AbButton

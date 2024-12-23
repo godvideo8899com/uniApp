@@ -1,0 +1,1 @@
+"use strict";exports._imports_0="/static/user.png",exports._imports_1="/static/order-light.svg",exports._imports_2="/static/money-bag-outline.svg",exports._imports_3="/static/hand-money-outline.svg",exports.imgErr="/static/imgErr.png",exports.loginImg="/static/logo.png",exports.tipMusic="/static/tip.mp3";

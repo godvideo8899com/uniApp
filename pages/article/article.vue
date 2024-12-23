@@ -5,25 +5,34 @@ import abMiniButton from "../components/abMiniButton.vue";
 import { onPullDownRefresh } from "@dcloudio/uni-app";
 import { articleListApi, deleteArticleApi } from "@/utils/api";
 import { isImageURL } from "@/utils/utils";
-import { useRequest } from "vue-hooks-plus";
+const recordsList = ref([
+  {
+    title: "",
+    content: "",
+    createTime: "",
+    files: [],
+  },
+]);
 const copy = (text) => {
   uni.setClipboardData({
     data: text,
   });
 };
 const searchValue = ref("");
-const { data: recordsList, run: articleListRun } = useRequest(
-  () => articleListApi({ searchValue: searchValue.value }),
-  {
-    cacheKey: "cacheKey-recordsList",
-  }
-);
+const search = () => {
+  getList();
+};
+const getList = async () => {
+  let res = await articleListApi({ searchValue: searchValue.value });
+  recordsList.value = res;
+};
+getList();
 const addArticle = () => {
   uni.navigateTo({ url: "/pages/article/addArticle" });
 };
 onPullDownRefresh(async () => {
   searchValue.value = "";
-  await articleListRun();
+  await getList();
   uni.stopPullDownRefresh();
 });
 const lookImg = (url) => {
@@ -73,7 +82,7 @@ const deleteItem = async (id) => {
         prefixIcon="search"
         confirmType="搜索"
         v-model="searchValue"
-        @blur="articleListRun"
+        @blur="search"
         placeholder="请输入关键字"
       >
       </uni-easyinput>
