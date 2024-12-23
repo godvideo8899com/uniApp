@@ -10,7 +10,7 @@ export function orderApi(data,hideLoading) {
 		url: '/orderList',
 		method: 'POST',
 		data,
-        hideLoading
+        hideLoading:true
 	})
 }
 export function orderUpdateApi(data) {
@@ -200,7 +200,8 @@ export function articleListApi(data) {
     return request({
         url: '/articleList',
         method: 'POST',
-        data
+        data,
+        hideLoading:true
     })
 }
 //添加文章

@@ -1,8 +1,0 @@
-{
-  "navigationBarTextStyle": "#fa2c19",
-  "navigationBarTitleText": "销售统计",
-  "usingComponents": {
-    "uni-datetime-picker": "../../uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker",
-    "qiun-data-charts": "../../uni_modules/uCharts/components/qiun-data-charts/qiun-data-charts"
-  }
-}

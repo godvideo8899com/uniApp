@@ -1,1 +1,0 @@
-"use strict";const t=require("../../common/vendor.js"),e={__name:"abEmpty",props:{text:{type:String,default:"暂无数据"}},setup(e){const o=e;return console.log(o),(o,n)=>({a:t.t(e.text)})}};wx.createComponent(e);

@@ -3,6 +3,10 @@ import { reactive, ref } from "vue";
 import AbButton from "../components/abButton.vue";
 import { loginApi, menuApi } from "@/utils/api";
 import { setToken } from "@/utils/auth";
+import { useFormatResult } from "@/utils/hooks";
+import { useRequest } from "vue-hooks-plus";
+// console.log(useFetchs);
+// const [flag, { set, setFalse, setTrue }] = useBoolean(true);
 import loginImg from "../../static/logo.png";
 const formData = reactive({
   userName: "",
@@ -17,6 +21,14 @@ const hobby = [
     value: "1",
   },
 ];
+const {
+  data: loginData,
+  error,
+  loading,
+  runAsync,
+} = useRequest(loginApi, {
+  manual: true,
+});
 if (userInfo.userName && userInfo.password) {
   formData.userName = userInfo.userName;
   formData.password = userInfo.password;
@@ -25,7 +37,7 @@ if (userInfo.userName && userInfo.password) {
 const loginForm = ref(null);
 const login = () => {
   loginForm.value.validate().then(async (res) => {
-    let data = await loginApi(formData);
+    await runAsync(formData);
     if (formData.userName == "superAdmin") {
       uni.setStorageSync("auth", "superAdmin");
     } else {
@@ -36,9 +48,9 @@ const login = () => {
     } else {
       uni.removeStorageSync("userInfo");
     }
-    setToken(data.tokenStr);
-    console.log(data.merchantID);
-    uni.setStorageSync("merchantID", data.merchantID);
+    setToken(loginData.value.tokenStr);
+    console.log(loginData.value.merchantID);
+    uni.setStorageSync("merchantID", loginData.value.merchantID);
     let resMenu = await menuApi({});
     uni.setStorageSync("menuList", resMenu);
     uni.reLaunch({
@@ -66,12 +78,21 @@ const rules = {
     ],
   },
 };
+// function serverFun() {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve("111");
+//     }, 2000);
+//   });
+// }
+// const { fetchRun, fetchs } = useFetchs(serverFun, {});
+// console.log(fetchs);
 </script>
 
 <template>
   <div>
     <image :src="loginImg" class="w-full" srcset="" />
-    <p class="text-center text-text3">请登录</p>
+    <p class="text-center text-text3">请登录{{ loading }}</p>
   </div>
   <div class="p-[12px]">
     <uni-forms :modelValue="formData" ref="loginForm" :rules="rules">

@@ -1,1 +1,0 @@
-<view class="flex flex-col items-center justify-center"><image class="w-3s5" src="https://static-ftcms.jd.com/p/files/61a9e3183985005b3958672b.png" alt="" srcset=""/><view class="text-gray-400 text-_28rpx_">{{a}}</view></view>

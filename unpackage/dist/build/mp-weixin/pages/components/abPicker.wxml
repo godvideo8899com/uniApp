@@ -1,1 +1,0 @@
-<view><picker bindchange="{{d}}" range="{{e}}"><view class="flex py-_6px_ px-_8px_ rounded-_4px_" style="border:1px solid var(--border_c)"><view wx:if="{{a}}" class="mr-_10px_">{{b}}:</view><view class="uni-input text-text2">{{c}}</view></view></picker></view>

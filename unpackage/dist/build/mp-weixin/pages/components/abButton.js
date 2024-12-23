@@ -1,1 +1,0 @@
-"use strict";const o=require("../../common/vendor.js");if(!Array){o.resolveComponent("uni-icons")()}Math;const e={__name:"abButton",props:{icon:{type:String,default:""},iconSize:{type:Number,default:18},iconColor:{type:String,default:"#fff"}},setup:e=>(n,t)=>({a:o.p({type:e.icon,color:e.iconColor,size:e.iconSize})})};wx.createComponent(e);
